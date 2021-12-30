@@ -67,7 +67,7 @@ Things you may want to cover:
 
 | Colum | Type       | Options                        |
 | ----- | ---------- | ------------------------------ |
-| user  | references | null: false  foreign_key: true |
+| user  | references | null: false, foreign_key: true |
 | item  | references | null: false, foreign_key: true |
 
 ### Association
@@ -78,15 +78,15 @@ Things you may want to cover:
 
 ## shippings テーブル
 
-| Colum              | Type        | Options     |
-| ------------------ | ----------- | ----------- |
-| zip_code           | string      | null: false |
-| prefecture_id      | integer     | null: false |
-| municipal_district | string      | null: false |
-| address            | string      | null: false |
-| building_name      | string      |             |
-| telephone_number   | string      | null: false |
-| purchase           | references  | null: false |
+| Colum              | Type        | Options                       |
+| ------------------ | ----------- | ----------------------------- |
+| zip_code           | string      | null: false                   |
+| prefecture_id      | integer     | null: false                   |
+| municipal_district | string      | null: false                   |
+| address            | string      | null: false                   |
+| building_name      | string      |                               |
+| telephone_number   | string      | null: false                   |
+| purchase           | references  | null: false, foreign_key: true|
 
 ### Association
 
