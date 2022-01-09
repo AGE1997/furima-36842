@@ -13,8 +13,8 @@ RSpec.describe User, type: :model do
       end
 
       it 'passwordが6文字以上であれば登録できる' do
-        @user.password = '123456'
-        @user.password_confirmation = '123456'
+        @user.password = '123abc'
+        @user.password_confirmation = '123abc'
         expect(@user).to be_valid
       end
     end
@@ -92,6 +92,51 @@ RSpec.describe User, type: :model do
         @user.password_confirmation = '12345'
         @user.valid?
         expect(@user.errors.full_messages).to include('Password is too short (minimum is 6 characters)')
+      end
+
+      it 'passwordが半角英数字混合でなければ登録できない(英字のみ)' do
+        @user.password = 'abcdef'
+        @user.password_confirmation = 'abcdef'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Password は半角英数字混合で入力してください')
+      end
+
+      it 'passwordが半角英数字混合でなければ登録できない(数字のみ)' do
+        @user.password = '123456'
+        @user.password_confirmation = '123456'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Password は半角英数字混合で入力してください')
+      end
+
+      it 'passwordが半角でなければ登録できない' do
+        @user.password = 'ＡＢＣ123'
+        @user.password_confirmation = 'ＡＢＣ123'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Password は半角英数字混合で入力してください')
+      end
+
+      it 'last_nameが全角文字でなければ登録できない' do
+        @user.last_name = 'test'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Last name には全角文字を使用してください')
+      end
+
+      it 'first_nameが全角文字でなければ登録できない' do
+        @user.first_name = 'sample'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('First name には全角文字を使用してください')
+      end
+
+      it 'pseudonym_last_nameが全角カタカナでなければ登録できない' do
+        @user.pseudonym_last_name = 'あああああ'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Pseudonym last name には全角カタカナを使用してください')
+      end
+
+      it 'pseudonym_first_nameが全角カタカナでなければ登録できない' do
+        @user.pseudonym_first_name = 'ｱｱｱｱｱ'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Pseudonym first name には全角カタカナを使用してください')
       end
     end
   end
