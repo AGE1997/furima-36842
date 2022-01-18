@@ -28,27 +28,27 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Explanation can't be blank")
       end
       it 'categoryが空では保存できない' do
-        @item.category_id = ''
+        @item.category_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Category can't be blank")
       end
       it 'conditionが空では保存できない' do
-        @item.condition_id = ''
+        @item.condition_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Condition can't be blank")
       end
       it 'shipping_chargesが空では保存できない' do
-        @item.shipping_charges_id = ''
+        @item.shipping_charges_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping charges can't be blank")
       end
       it 'prefectureが空では保存できない' do
-        @item.prefecture_id = ''
+        @item.prefecture_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Prefecture can't be blank")
       end
       it 'daysが空では保存できない' do
-        @item.days_id = ''
+        @item.days_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Days can't be blank")
       end
@@ -57,15 +57,25 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Price can't be blank")
       end
-      it 'priceは300~9,999,999の間でないと保存できない' do
+      it 'priceは300未満だと保存できない' do
         @item.price = 111
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is out of setting range")
+      end
+      it 'priceは9,999,999より大きいと保存できない' do
+        @item.price = 19970331
         @item.valid?
         expect(@item.errors.full_messages).to include("Price is out of setting range")
       end
       it 'priceは半角数値でないと保存できない' do
         @item.price = '３３１'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is out of setting range")
+        expect(@item.errors.full_messages).to include("Price is invalid. Input half-width characters")
+      end
+      it 'priceは整数でないと保存できない' do
+        @item.price ='1997.331'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is invalid")
       end
       it 'userが紐づいていないと保存できない' do
         @item.user = nil
