@@ -12,7 +12,7 @@ RSpec.describe Item, type: :model do
       end
     end
     context '商品が出品できない場合' do
-      it  'imageが空では保存できない' do
+      it 'imageが空では保存できない' do
         @item.image = nil
         @item.valid?
         expect(@item.errors.full_messages).to include("Image can't be blank")
@@ -60,27 +60,27 @@ RSpec.describe Item, type: :model do
       it 'priceは300未満だと保存できない' do
         @item.price = 111
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is out of setting range")
+        expect(@item.errors.full_messages).to include('Price is out of setting range')
       end
       it 'priceは9,999,999より大きいと保存できない' do
-        @item.price = 19970331
+        @item.price = 19_970_331
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is out of setting range")
+        expect(@item.errors.full_messages).to include('Price is out of setting range')
       end
       it 'priceは半角数値でないと保存できない' do
         @item.price = '３３１'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is invalid. Input half-width characters")
+        expect(@item.errors.full_messages).to include('Price is invalid. Input half-width characters')
       end
       it 'priceは整数でないと保存できない' do
-        @item.price ='1997.331'
+        @item.price = '1997.331'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is invalid")
+        expect(@item.errors.full_messages).to include('Price is invalid')
       end
       it 'userが紐づいていないと保存できない' do
         @item.user = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include("User must exist")
+        expect(@item.errors.full_messages).to include('User must exist')
       end
     end
   end
