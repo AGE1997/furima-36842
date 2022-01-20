@@ -60,12 +60,12 @@ RSpec.describe Item, type: :model do
       it 'priceは300未満だと保存できない' do
         @item.price = 111
         @item.valid?
-        expect(@item.errors.full_messages).to include('Price is out of setting range')
+        expect(@item.errors.full_messages).to include('Price is invalid. Price is out of setting range')
       end
       it 'priceは9,999,999より大きいと保存できない' do
         @item.price = 19_970_331
         @item.valid?
-        expect(@item.errors.full_messages).to include('Price is out of setting range')
+        expect(@item.errors.full_messages).to include('Price is invalid. Price is out of setting range')
       end
       it 'priceは半角数値でないと保存できない' do
         @item.price = '３３１'
@@ -75,7 +75,7 @@ RSpec.describe Item, type: :model do
       it 'priceは整数でないと保存できない' do
         @item.price = '1997.331'
         @item.valid?
-        expect(@item.errors.full_messages).to include('Price is invalid')
+        expect(@item.errors.full_messages).to include('Price is invalid. Price is out of setting range')
       end
       it 'userが紐づいていないと保存できない' do
         @item.user = nil
