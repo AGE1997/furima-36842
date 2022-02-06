@@ -44,6 +44,6 @@ class PurchasesController < ApplicationController
   end
 
   def sold_out_item
-    redirect_to root_path if @currentt_user != @item.user && @item.purchase.present?
+    redirect_to root_path if current_user != @item.user && @item.purchase.present?
   end
 end
