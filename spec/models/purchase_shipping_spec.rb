@@ -26,14 +26,14 @@ RSpec.describe PurchaseShipping, type: :model do
         expect(@purchase_shipping.errors.full_messages).to include("Zip code can't be blank")
       end
       it 'zip_codeが3桁ハイフン4桁の半角文字列で正しい形式でないと保存できない' do
-        @purchase_shipping.zip_code = 1234567
+        @purchase_shipping.zip_code = 1_234_567
         @purchase_shipping.valid?
-        expect(@purchase_shipping.errors.full_messages).to include("Zip code is invalid. Include hyphen(-)")
+        expect(@purchase_shipping.errors.full_messages).to include('Zip code is invalid. Include hyphen(-)')
       end
       it 'zip_codeが半角文字列出ないとと保存できない' do
         @purchase_shipping.zip_code = '１２３-４５６７'
         @purchase_shipping.valid?
-        expect(@purchase_shipping.errors.full_messages).to include("Zip code is invalid. Include hyphen(-)")
+        expect(@purchase_shipping.errors.full_messages).to include('Zip code is invalid. Include hyphen(-)')
       end
       it 'prefectureが空では保存できない' do
         @purchase_shipping.prefecture_id = 1
@@ -56,19 +56,19 @@ RSpec.describe PurchaseShipping, type: :model do
         expect(@purchase_shipping.errors.full_messages).to include("Telephone number can't be blank")
       end
       it 'telephone_numberが10桁未満だと保存できない' do
-        @purchase_shipping.telephone_number = 123456789
+        @purchase_shipping.telephone_number = 123_456_789
         @purchase_shipping.valid?
-        expect(@purchase_shipping.errors.full_messages).to include("Telephone number is invalid. 電話番号は10桁 or 11桁")
+        expect(@purchase_shipping.errors.full_messages).to include('Telephone number is invalid. 電話番号は10桁 or 11桁')
       end
       it 'telephone_numberが11桁以上だと保存できない' do
-        @purchase_shipping.telephone_number = 123456789012
+        @purchase_shipping.telephone_number = 123_456_789_012
         @purchase_shipping.valid?
-        expect(@purchase_shipping.errors.full_messages).to include("Telephone number is invalid. 電話番号は10桁 or 11桁")
+        expect(@purchase_shipping.errors.full_messages).to include('Telephone number is invalid. 電話番号は10桁 or 11桁')
       end
       it 'telephone_numberが半角数値でないと保存できない' do
         @purchase_shipping.telephone_number = '１２３４５６７８９０'
         @purchase_shipping.valid?
-        expect(@purchase_shipping.errors.full_messages).to include("Telephone number is invalid. 電話番号は10桁 or 11桁")
+        expect(@purchase_shipping.errors.full_messages).to include('Telephone number is invalid. 電話番号は10桁 or 11桁')
       end
       it 'userが紐づいていないと保存できない' do
         @purchase_shipping.user_id = nil

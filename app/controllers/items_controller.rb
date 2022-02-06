@@ -56,8 +56,6 @@ class ItemsController < ApplicationController
   end
 
   def sold_out_item
-    if @currentt_user == @item.user && @item.purchase.present?
-      redirect_to root_path
-    end
+    redirect_to root_path if @currentt_user == @item.user && @item.purchase.present?
   end
 end

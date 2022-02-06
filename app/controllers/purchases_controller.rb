@@ -26,11 +26,13 @@ class PurchasesController < ApplicationController
   end
 
   def purchase_shipping_params
-    params.require(:purchase_shipping).permit(:zip_code, :prefecture_id, :municipal_district, :address, :telephone_number).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
+    params.require(:purchase_shipping).permit(:zip_code, :prefecture_id, :municipal_district, :address, :telephone_number).merge(
+      user_id: current_user.id, item_id: params[:item_id], token: params[:token]
+    )
   end
 
   def pay_item
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
     Payjp::Charge.create(
       amount: @item.price,
       card: purchase_shipping_params[:token],
@@ -39,14 +41,10 @@ class PurchasesController < ApplicationController
   end
 
   def contributor_confirmation
-    if current_user == @item.user
-      redirect_to root_path
-    end
+    redirect_to root_path if current_user == @item.user
   end
 
   def sold_out_item
-    if @currentt_user != @item.user && @item.purchase.present?
-      redirect_to root_path
-    end
+    redirect_to root_path if @currentt_user != @item.user && @item.purchase.present?
   end
 end
